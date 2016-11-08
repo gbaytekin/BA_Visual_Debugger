@@ -52,6 +52,7 @@ class LookupMesh (gdb.Command):
 
 		dump =  {
 			'num_of_faces':num_of_faces,
+			'num_of_vertices':num_of_vertices,
 			'vert_coords_list':vert_coords_list,
 			'face_handles_list':face_handles_list,
 			'edge_vertex_handles_list':edge_vertex_handles_list,
@@ -79,6 +80,7 @@ class LookupMesh (gdb.Command):
 			vertex_handle=dump['edge_vertex_handles_list'][int(edge_handle)]
 
 			vertex=[]
+			vertex.append(int(vertex_handle))
 			for z in range(0,3):
 				vertex.append(float(dump['vert_coords_list'][int(vertex_handle)*3+z]))
 				#vertex.append(float("{0:.2f}".format(float(dump['vert_coords_list'][int(vertex_handle)*3+z]))))
@@ -88,6 +90,7 @@ class LookupMesh (gdb.Command):
 				edge_handle=dump['edge_next_handles_list'][int(edge_handle)]
 				vertex_handle=dump['edge_vertex_handles_list'][int(edge_handle)]
 				vertex=[]
+				vertex.append(int(vertex_handle))
 				for z in range(0,3):
 					vertex.append(float(dump['vert_coords_list'][int(vertex_handle)*3+z]))
 					#vertex.append(float("{0:.2f}".format(float(dump['vert_coords_list'][int(vertex_handle)*3+z]))))
@@ -96,6 +99,7 @@ class LookupMesh (gdb.Command):
 			#print("faces[" + str(x) + "] = " + str(faces[x]))
 
 		myfile = open('faces.txt', 'w')
+		print(dump['num_of_vertices'], file=myfile)
 		for item in faces:
 			print(item, file=myfile)
 		print(" | Faces printed to faces.txt")
